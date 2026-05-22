@@ -1,0 +1,99 @@
+services:
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: sr_nginx
+    depends_on:
+      - api
+      - web
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    networks:
+      - sr_net
+
+  api:
+    build:
+      context: ./api
+      target: frankenphp_dev_local
+      args:
+        UID: "${UID:-1000}"
+        GID: "${GID:-1000}"
+    container_name: sr_api
+    env_file: .env
+    environment:
+      SERVER_NAME: ":80"
+      SYMFONY_VERSION: "^7.1"
+      STABILITY: "stable"
+      APP_ENV: "dev"
+      XDEBUG_MODE: "off"
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+    volumes:
+      - ./api:/app
+      - api_var:/app/var
+      - caddy_data:/data
+      - caddy_config:/config
+    expose:
+      - "80"
+    networks:
+      - sr_net
+    tty: true
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile.dev
+      args:
+        UID: "${UID:-1000}"
+        GID: "${GID:-1000}"
+    container_name: sr_web
+    env_file: .env
+    volumes:
+      - ./web:/app
+    expose:
+      - "5173"
+    networks:
+      - sr_net
+    command: sh -c "[ -d node_modules ] || npm ci || npm install; exec npm run dev -- --host 0.0.0.0 --port 5173"
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: sr_postgres
+    env_file: .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - sr_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: sr_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - sr_net
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: sr_rabbitmq
+    env_file: .env
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - sr_net
+
+volumes:
+  postgres_data:
+  api_var:
+  caddy_data:
+  caddy_config:
+
+networks:
+  sr_net:
+    driver: bridge

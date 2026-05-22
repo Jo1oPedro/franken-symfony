@@ -1,0 +1,105 @@
+# ============================================================
+# IDEs & Editors
+# ============================================================
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.eclipse/
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+nbproject/
+.netbeans/
+
+# ============================================================
+# OS
+# ============================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ============================================================
+# Docker (volumes, overrides locais)
+# ============================================================
+docker-compose.override.yml
+docker-compose.local.yml
+.docker/
+
+# ============================================================
+# API — Symfony
+# ============================================================
+api/vendor/
+api/var/
+api/.env.local
+api/.env.local.php
+api/.env.*.local
+api/public/bundles/
+api/public/build/
+
+# Doctrine
+api/migrations/*.sql
+
+# PHPUnit
+api/.phpunit.result.cache
+api/.phpunit.cache/
+
+# Composer
+api/composer.phar
+
+# Symfony CLI
+api/.symfony.local.yaml
+api/.php-cs-fixer.cache
+api/.php_cs.cache
+
+# ============================================================
+# Web — React / Vite
+# ============================================================
+web/node_modules/
+web/dist/
+web/build/
+web/.env.local
+web/.env.*.local
+web/.env.development.local
+web/.env.test.local
+web/.env.production.local
+
+# Vite
+web/.vite/
+
+# TypeScript
+web/*.tsbuildinfo
+
+# Testes
+web/coverage/
+web/test-results/
+web/playwright-report/
+
+# ============================================================
+# Logs & temporários (qualquer nível)
+# ============================================================
+*.log
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ============================================================
+# Segredos & variáveis de ambiente
+# ============================================================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
