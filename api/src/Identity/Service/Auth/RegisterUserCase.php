@@ -24,7 +24,7 @@ class RegisterUserCase
 
         $tempUser = new User(Uuid::v7()->toRfc4122(), $requestDTO->email, "");
 
-        $hashedPassword = $this->hasher->hashPassword($tempUser, $requestDTO->plainPassword);
+        $hashedPassword = $this->hasher->hashPassword($tempUser, $requestDTO->password);
 
         $user = new User(
             id: $tempUser->getId(),

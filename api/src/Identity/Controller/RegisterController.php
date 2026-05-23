@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class RegisterController extends AbstractController
@@ -18,16 +19,10 @@ final class RegisterController extends AbstractController
     ) {}
 
     #[Route("/api/register", methods: ["POST"])]
-    public function __invoke(Request $request): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $userDTO = ($this->registerUserCase) (
-            new RegisterRequestDTO(
-                email: $data['email'],
-                plainPassword: $data['password'],
-            )
-        );
+    public function __invoke(
+        #[MapRequestPayload] RegisterRequestDTO $request
+    ): JsonResponse {
+        $userDTO = ($this->registerUserCase)($request);
 
         return $this->json(["user" => $userDTO], Response::HTTP_CREATED);
     }
