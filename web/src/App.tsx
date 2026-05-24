@@ -1,21 +1,31 @@
-import { useEffect, useState } from 'react';
-import Button from "./components/Button.tsx";
 import LoginPage from "./pages/auth/LoginPage.tsx";
+import {Navigate, Route, Routes, useLocation} from "react-router";
+import RegisterPage from "./pages/auth/RegisterPage.tsx";
+import {useAppSelector} from "./store/hooks.ts";
+import Dashboard from "./pages/board/Dashboard.tsx";
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://api.localhost';
+function GuestRoute({ children }: { children: React.ReactNode }) {
+    const token = useAppSelector((state) => state.auth.token);
+    console.log(token);
+    return token ? <Navigate to="/dashboard" replace /> : <>{children}</>;
+}
+
+function RequireAuth({ children }: { children: React.ReactNode }) {
+    const token = useAppSelector((state) => state.auth.token);
+    const location = useLocation();
+    return token
+        ? <>{children}</>
+        : <Navigate to="/login" replace state={{ from: location }} />;
+}
+
+import * as React from "react";
 
 export default function App() {
-  const [status, setStatus] = useState<string>('checking...');
-
-  useEffect(() => {
-    fetch(`${API_URL}/`)
-      .then((r) => setStatus(`API responded ${r.status}`))
-      .catch((e) => setStatus(`API unreachable: ${e.message}`));
-  }, []);
-
   return (
-    <>
-      <LoginPage />
-    </>
+    <Routes>
+      <Route path="/login" element={<GuestRoute> <LoginPage /> </GuestRoute>} />
+      <Route path="/register" element={<GuestRoute> <RegisterPage /> </GuestRoute>} />
+      <Route path="/dashboard" element={<RequireAuth> <Dashboard /> </RequireAuth>} />
+    </Routes>
   );
 }

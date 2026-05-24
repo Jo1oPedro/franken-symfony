@@ -1,0 +1,79 @@
+/* ============================================================
+   Stak — Design Tokens
+   Cole este arquivo no seu globals.css (ou importe-o)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ---- Surfaces -------------------------------------------- */
+  --bg:              #fafaf7;
+  --surface:         #ffffff;
+  --surface-subtle:  #f5f3ee;
+  --surface-hover:   #f0eee9;
+  --border:          #e8e4dc;
+  --border-strong:   #d4cfc4;
+  --divider:         #eeeae2;
+
+  /* ---- Text ------------------------------------------------ */
+  --text:            #1a1816;
+  --text-muted:      #6b6862;
+  --text-faint:      #9a968e;
+  --text-inverse:    #fafaf7;
+
+  /* ---- Brand ----------------------------------------------- */
+  --primary:         #c8633f;
+  --primary-hover:   #b15633;
+  --primary-soft:    #fbece4;
+  --primary-ring:    rgba(200, 99, 63, 0.20);
+
+  /* ---- Semantic tag palette -------------------------------- */
+  --red:             #d05646;
+  --red-soft:        #fae6e1;
+  --amber:           #c98a2a;
+  --amber-soft:      #fbf0d8;
+  --green:           #5a8a3a;
+  --green-soft:      #e6f0d8;
+  --blue:            #3a6a9a;
+  --blue-soft:       #dde8f3;
+  --purple:          #7a5a9a;
+  --purple-soft:     #ebe3f3;
+  --slate:           #6b6862;
+  --slate-soft:      #ececea;
+
+  /* ---- Typography ------------------------------------------ */
+  --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ---- Radii ----------------------------------------------- */
+  --r-4:    4px;
+  --r-6:    6px;
+  --r-8:    8px;
+  --r-10:  10px;
+  --r-12:  12px;
+  --r-16:  16px;
+  --r-full: 9999px;
+
+  /* ---- Shadows --------------------------------------------- */
+  --shadow-sm:   0 1px 2px rgba(20, 16, 12, 0.04), 0 0 0 1px rgba(20, 16, 12, 0.04);
+  --shadow-md:   0 4px 12px rgba(20, 16, 12, 0.06), 0 1px 3px rgba(20, 16, 12, 0.04);
+  --shadow-lg:   0 24px 60px rgba(20, 16, 12, 0.18), 0 8px 24px rgba(20, 16, 12, 0.10);
+  --shadow-card: 0 1px 0 rgba(20, 16, 12, 0.04), 0 1px 2px rgba(20, 16, 12, 0.06);
+  --shadow-primary: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 1px 2px rgba(200, 99, 63, 0.30);
+}
+
+/* ---- Base ----------------------------------------------- */
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
+h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2;  }
+h3 { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2;  }
+h4 { font-size: 14px; font-weight: 600; letter-spacing: -0.005em; }

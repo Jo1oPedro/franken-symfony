@@ -2,6 +2,7 @@
 
 namespace App\Identity\DTO;
 
+use App\Identity\Validator\UniqueEmail;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -12,6 +13,7 @@ final readonly class RegisterRequestDTO
         #[NotBlank(message: "Email is required")]
         #[Email(message: "Email is required")]
         #[Length(max: 100, maxMessage: "Email must not exceed 100 characters")]
+        #[UniqueEmail]
         public string $email,
 
         #[NotBlank(message: "Password is required")]

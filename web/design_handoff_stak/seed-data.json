@@ -1,0 +1,144 @@
+{
+  "user": {
+    "id": "u_1",
+    "name": "Ana Souza",
+    "username": "ana",
+    "email": "ana.souza@somewhere.com",
+    "avatarColor": "primary",
+    "timezone": "(GMT-3) São Paulo",
+    "language": "English",
+    "weekStartsOn": "monday",
+    "plan": "free"
+  },
+
+  "boards": [
+    { "id": "personal", "name": "Personal",     "emoji": "🌱", "starred": true,  "position": 0 },
+    { "id": "work",     "name": "Work · Q2",    "emoji": "💼", "starred": false, "position": 1 },
+    { "id": "move",     "name": "House move",   "emoji": "📦", "starred": false, "position": 2 },
+    { "id": "reading",  "name": "Reading list", "emoji": "📚", "starred": false, "position": 3 },
+    { "id": "recipes",  "name": "Recipes",      "emoji": "🍳", "starred": false, "position": 4 }
+  ],
+
+  "columns": [
+    { "id": "inbox", "boardId": "personal", "title": "Inbox",       "color": "slate",   "position": 0 },
+    { "id": "today", "boardId": "personal", "title": "Today",       "color": "primary", "position": 1 },
+    { "id": "doing", "boardId": "personal", "title": "In Progress", "color": "blue",    "position": 2 },
+    { "id": "done",  "boardId": "personal", "title": "Done",        "color": "green",   "position": 3 }
+  ],
+
+  "tags": [
+    { "id": "t_urgent",   "boardId": "personal", "color": "red",    "label": "urgent"   },
+    { "id": "t_errand",   "boardId": "personal", "color": "slate",  "label": "errand"   },
+    { "id": "t_shopping", "boardId": "personal", "color": "blue",   "label": "shopping" },
+    { "id": "t_family",   "boardId": "personal", "color": "purple", "label": "family"   },
+    { "id": "t_work",     "boardId": "personal", "color": "green",  "label": "work"     },
+    { "id": "t_health",   "boardId": "personal", "color": "amber",  "label": "health"   },
+    { "id": "t_reading",  "boardId": "personal", "color": "blue",   "label": "reading"  },
+    { "id": "t_finance",  "boardId": "personal", "color": "amber",  "label": "finance"  },
+    { "id": "t_home",     "boardId": "personal", "color": "slate",  "label": "home"     },
+    { "id": "t_thisweek", "boardId": "personal", "color": "amber",  "label": "this week"}
+  ],
+
+  "cards": [
+    {
+      "id": "c_1", "columnId": "inbox", "position": 0,
+      "title": "Reply to landlord email about lease renewal",
+      "tagIds": ["t_urgent"], "due": "Tomorrow"
+    },
+    {
+      "id": "c_2", "columnId": "inbox", "position": 1,
+      "title": "Pick up dry cleaning before Friday",
+      "tagIds": ["t_errand"]
+    },
+    {
+      "id": "c_3", "columnId": "inbox", "position": 2,
+      "title": "Research bike helmets — commuter style",
+      "tagIds": ["t_shopping"], "attachments": 2
+    },
+    {
+      "id": "c_4", "columnId": "inbox", "position": 3,
+      "title": "Call mom about thanksgiving plans",
+      "tagIds": ["t_family"],
+      "checklist": [
+        { "text": "Pick a weekend", "done": false },
+        { "text": "Confirm with siblings", "done": false }
+      ]
+    },
+
+    {
+      "id": "c_5", "columnId": "today", "position": 0,
+      "title": "Finish wireframe deck for client review",
+      "description": "Six screens × 3–4 variations each. Include both mobile and desktop frames. Low-fi sketchy vibe for round one, hi-fi mockups for the directions Ana selects. Deliver as a single design canvas.",
+      "tagIds": ["t_urgent", "t_work", "t_thisweek"],
+      "due": "Today, 5:00 PM",
+      "priority": "high",
+      "coverColor": "primary",
+      "assignedUserIds": ["u_1"],
+      "checklist": [
+        { "text": "Auth screens (register + login)", "done": true },
+        { "text": "Empty state / onboarding", "done": true },
+        { "text": "Board with sidebar", "done": true },
+        { "text": "Card detail modal", "done": false },
+        { "text": "Account / settings", "done": false }
+      ],
+      "attachments": [
+        { "name": "brief-v2.pdf", "size": 245760 }
+      ],
+      "comments": [
+        { "author": "Marco", "avatarColor": "purple", "body": "Looking good! Can we add a settings screen too? I want to see how the profile photo upload feels.", "createdAt": "yesterday" }
+      ]
+    },
+    {
+      "id": "c_6", "columnId": "today", "position": 1,
+      "title": "Gym — leg day",
+      "tagIds": ["t_health"], "due": "6:00 PM"
+    },
+    {
+      "id": "c_7", "columnId": "today", "position": 2,
+      "title": "Groceries: rice, eggs, soap",
+      "tagIds": ["t_errand"],
+      "checklist": [
+        { "text": "Rice", "done": false },
+        { "text": "Eggs", "done": false },
+        { "text": "Soap", "done": false }
+      ]
+    },
+
+    {
+      "id": "c_8", "columnId": "doing", "position": 0,
+      "title": "Read \"Deep Work\" — chapter 3",
+      "tagIds": ["t_reading"], "due": "Sun",
+      "checklist": [{ "text": "Take notes", "done": true }]
+    },
+    {
+      "id": "c_9", "columnId": "doing", "position": 1,
+      "title": "Tax docs spreadsheet — 2025",
+      "tagIds": ["t_urgent", "t_finance"], "due": "Mon",
+      "checklist": [
+        { "text": "Gather receipts", "done": true },
+        { "text": "Categorize expenses", "done": true },
+        { "text": "Income tab", "done": false },
+        { "text": "Deductions tab", "done": false },
+        { "text": "Review with accountant", "done": false },
+        { "text": "Submit", "done": false }
+      ]
+    },
+
+    {
+      "id": "c_10", "columnId": "done", "position": 0,
+      "title": "Book dentist appointment",
+      "tagIds": ["t_health"], "done": true
+    },
+    {
+      "id": "c_11", "columnId": "done", "position": 1,
+      "title": "Fix kitchen sink leak",
+      "tagIds": ["t_home"], "done": true
+    },
+    {
+      "id": "c_12", "columnId": "done", "position": 2,
+      "title": "Send invoice #042 to client",
+      "tagIds": ["t_work"], "done": true,
+      "attachments": [{ "name": "invoice-042.pdf", "size": 89456 }]
+    }
+  ]
+}

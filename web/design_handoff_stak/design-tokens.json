@@ -1,0 +1,98 @@
+{
+  "color": {
+    "bg":             { "value": "#fafaf7" },
+    "surface":        { "value": "#ffffff" },
+    "surfaceSubtle":  { "value": "#f5f3ee" },
+    "surfaceHover":   { "value": "#f0eee9" },
+    "border":         { "value": "#e8e4dc" },
+    "borderStrong":   { "value": "#d4cfc4" },
+    "divider":        { "value": "#eeeae2" },
+
+    "text":           { "value": "#1a1816" },
+    "textMuted":      { "value": "#6b6862" },
+    "textFaint":      { "value": "#9a968e" },
+    "textInverse":    { "value": "#fafaf7" },
+
+    "primary":        { "value": "#c8633f" },
+    "primaryHover":   { "value": "#b15633" },
+    "primarySoft":    { "value": "#fbece4" },
+    "primaryRing":    { "value": "rgba(200,99,63,0.20)" },
+
+    "red":            { "value": "#d05646", "soft": "#fae6e1" },
+    "amber":          { "value": "#c98a2a", "soft": "#fbf0d8" },
+    "green":          { "value": "#5a8a3a", "soft": "#e6f0d8" },
+    "blue":           { "value": "#3a6a9a", "soft": "#dde8f3" },
+    "purple":         { "value": "#7a5a9a", "soft": "#ebe3f3" },
+    "slate":          { "value": "#6b6862", "soft": "#ececea" }
+  },
+
+  "font": {
+    "sans": "\"Geist\", -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+    "mono": "\"Geist Mono\", ui-monospace, SFMono-Regular, Menlo, monospace"
+  },
+
+  "fontSize": {
+    "xs":   { "px": 11, "weight": 500, "lh": 1.45, "ls": "0" },
+    "sm":   { "px": 12, "weight": 400, "lh": 1.45, "ls": "-0.005em" },
+    "base": { "px": 13, "weight": 400, "lh": 1.45, "ls": "-0.005em" },
+    "md":   { "px": 14, "weight": 400, "lh": 1.45, "ls": "-0.005em" },
+    "lg":   { "px": 15, "weight": 500, "lh": 1.4,  "ls": "-0.01em"  },
+    "xl":   { "px": 17, "weight": 600, "lh": 1.2,  "ls": "-0.02em"  },
+    "2xl":  { "px": 20, "weight": 600, "lh": 1.2,  "ls": "-0.02em"  },
+    "3xl":  { "px": 22, "weight": 600, "lh": 1.2,  "ls": "-0.02em"  },
+    "4xl":  { "px": 26, "weight": 600, "lh": 1.15, "ls": "-0.02em"  },
+    "5xl":  { "px": 32, "weight": 600, "lh": 1.15, "ls": "-0.02em"  },
+    "6xl":  { "px": 36, "weight": 600, "lh": 1.05, "ls": "-0.02em"  }
+  },
+
+  "spacing": {
+    "base": 4,
+    "scale": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 36, 40, 44, 56]
+  },
+
+  "radius": {
+    "4":   "4px",
+    "6":   "6px",
+    "8":   "8px",
+    "10":  "10px",
+    "12":  "12px",
+    "16":  "16px",
+    "full": "9999px"
+  },
+
+  "shadow": {
+    "sm":      "0 1px 2px rgba(20,16,12,0.04), 0 0 0 1px rgba(20,16,12,0.04)",
+    "md":      "0 4px 12px rgba(20,16,12,0.06), 0 1px 3px rgba(20,16,12,0.04)",
+    "lg":      "0 24px 60px rgba(20,16,12,0.18), 0 8px 24px rgba(20,16,12,0.10)",
+    "card":    "0 1px 0 rgba(20,16,12,0.04), 0 1px 2px rgba(20,16,12,0.06)",
+    "primary": "0 1px 0 rgba(255,255,255,0.15) inset, 0 1px 2px rgba(200,99,63,0.30)"
+  },
+
+  "component": {
+    "button": {
+      "sm": { "h": 30, "pad": "0 10px", "fontSize": 13, "radius": 6 },
+      "md": { "h": 36, "pad": "0 14px", "fontSize": 14, "radius": 8 },
+      "lg": { "h": 42, "pad": "0 18px", "fontSize": 15, "radius": 8 }
+    },
+    "input": { "h": 40, "pad": "0 12px", "radius": 8, "fontSize": 14 },
+    "tag":   { "h": 22, "pad": "0 8px", "radius": 6, "fontSize": 12, "dotSize": 6 },
+    "card":  { "radius": 8, "padding": "10px 12px", "shadow": "sm" },
+    "column":{ "width": 268, "radius": 10, "bg": "surfaceSubtle" },
+    "sidebar": { "width": 220 },
+    "modal":   { "width": 760, "radius": 16, "shadow": "lg" }
+  },
+
+  "icons": {
+    "library": "lucide-react",
+    "defaultSize": 16,
+    "strokeWidth": 1.5,
+    "used": [
+      "search", "plus", "check", "x", "star", "mail", "lock", "user",
+      "bell", "settings", "trash-2", "pencil", "calendar", "clock",
+      "flag", "paperclip", "send", "chevron-right", "chevron-left",
+      "chevron-down", "chevron-up", "more-horizontal", "more-vertical",
+      "layout-grid", "home", "inbox", "filter", "arrow-right", "arrow-up",
+      "log-out", "smile"
+    ]
+  }
+}

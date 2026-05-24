@@ -3,8 +3,13 @@ import * as React from "react";
 import InputField from "../../components/InputField.tsx";
 import Button from "../../components/Button.tsx";
 import {login} from "../../services/auth/authService.ts";
+import {useAppDispatch} from "../../store/hooks.ts";
+import {setCredentials} from "../../store/authSlice.ts";
+import {useNavigate} from "react-router";
 
 const LoginPage = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
@@ -15,12 +20,11 @@ const LoginPage = () => {
 
         try {
             const data = await login(email, password);
-            //dispatch(setCredentais(data));
-            //navigate("/dashboard");
+            dispatch(setCredentials(data));
+            navigate("/dashboard");
         } catch (error) {
             setError("erro ao logar");
         }
-        console.log("entrou");
     }
 
     return (

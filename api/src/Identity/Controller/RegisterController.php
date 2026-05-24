@@ -4,10 +4,8 @@ namespace App\Identity\Controller;
 
 use App\Identity\DTO\RegisterRequestDTO;
 use App\Identity\Service\Auth\RegisterUserCase;
-use App\Identity\Service\RegisterUserCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
@@ -22,8 +20,14 @@ final class RegisterController extends AbstractController
     public function __invoke(
         #[MapRequestPayload] RegisterRequestDTO $request
     ): JsonResponse {
-        $userDTO = ($this->registerUserCase)($request);
+        $authDTO = ($this->registerUserCase)($request);
 
-        return $this->json(["user" => $userDTO], Response::HTTP_CREATED);
+        return $this->json(
+            [
+                "user" => ["id" => $authDTO->id, "email" => $authDTO->email],
+                "token" => $authDTO->token
+            ],
+            Response::HTTP_CREATED
+        );
     }
 }

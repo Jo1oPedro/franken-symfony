@@ -9,7 +9,10 @@
       "Bash(find //wsl.localhost/ubuntu-24.04/home/cascata/symfony-react/web/src -type f | sort)",
       "Bash(wsl -d ubuntu-24.04 -- ls /home/cascata/symfony-react/)",
       "Bash(dir \"\\\\\\\\wsl.localhost\\\\ubuntu-24.04\\\\home\\\\cascata\\\\symfony-react\\\\api\")",
-      "Bash(dir \"\\\\\\\\wsl.localhost\\\\ubuntu-24.04\\\\home\\\\cascata\\\\symfony-react\\\\web\")"
+      "Bash(dir \"\\\\\\\\wsl.localhost\\\\ubuntu-24.04\\\\home\\\\cascata\\\\symfony-react\\\\web\")",
+      "Bash(git -C /home/cascata/symfony-react ls-files --error-unmatch api/src/Identity/)",
+      "Bash(ls '\\\\\\\\wsl.localhost\\\\ubuntu-24.04\\\\home\\\\cascata\\\\symfony-react\\\\web\\\\src')",
+      "Read(///wsl.localhost/ubuntu-24.04/home/cascata/symfony-react/api/**)"
     ]
   }
 }
