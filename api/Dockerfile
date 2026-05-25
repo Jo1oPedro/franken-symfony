@@ -113,12 +113,12 @@ RUN <<-EOF
 	chown -R app:app /data /config /app /var/log/supervisor
 EOF
 
-COPY --link --chmod=644 supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY --link --chmod=644 supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
 USER app
 WORKDIR /app
 
-CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
 
 # Builder for the prod FrankenPHP image
 FROM frankenphp_base AS frankenphp_prod_builder
