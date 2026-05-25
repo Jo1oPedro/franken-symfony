@@ -6,6 +6,7 @@ use App\Identity\DTO\RegisterRequestDTO;
 use App\Identity\DTO\AuthResponseDTO;
 use App\Identity\Entity\User;
 use App\Identity\Repository\UserRepositoryInterface;
+use App\shared\Domain\TransactionManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -15,22 +16,28 @@ class RegisterUserCase
         private readonly UserRepositoryInterface $userRepository,
         private readonly UserPasswordHasherInterface $hasher,
         private readonly EmailVerifier $emailVerifier,
+        private readonly TransactionManagerInterface $entityManager
     ) {}
 
     public function __invoke(RegisterRequestDTO $requestDTO): AuthResponseDTO
     {
-        $tempUser = new User(Uuid::v7()->toRfc4122(), $requestDTO->email, "");
+        $user = $this->entityManager->transactional(function () use ($requestDTO): User {
+            $tempUser = new User(Uuid::v7()->toRfc4122(), $requestDTO->email, "");
 
-        $hashedPassword = $this->hasher->hashPassword($tempUser, $requestDTO->password);
+            $hashedPassword = $this->hasher->hashPassword($tempUser, $requestDTO->password);
 
-        $user = new User(
-            id: $tempUser->getId(),
-            email :$tempUser->getEmail(),
-            password: $hashedPassword
-        );
+            $user = new User(
+                id: $tempUser->getId(),
+                email :$tempUser->getEmail(),
+                password: $hashedPassword
+            );
 
-        $this->userRepository->save($user);
-        $this->emailVerifier->sendVerificationEmail($user);
+
+            $this->userRepository->save($user);
+            $this->emailVerifier->sendVerificationEmail($user);
+
+            return $user;
+        });
 
         return new AuthResponseDTO(
             id: $user->getId(),
