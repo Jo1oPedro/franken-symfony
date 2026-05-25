@@ -2,7 +2,7 @@ import {useAppDispatch} from "../../store/hooks.ts";
 import {useState} from "react";
 import * as React from "react";
 import {register} from "../../services/auth/authService.ts";
-import {setCredentials} from "../../store/authSlice.ts";
+import {setUser} from "../../store/authSlice.ts";
 import MarketingPanel from "../../components/auth/MarketingPanel.tsx";
 import {Link, useNavigate} from "react-router";
 
@@ -36,7 +36,7 @@ const RegisterPage = () => {
         try {
             const data = await register(name, email, password);
             console.log(data);
-            dispatch(setCredentials(data));
+            dispatch(setUser(data.user));
             navigate("/dashboard");
         } catch (error: any) {
             const messages: string[] = [];

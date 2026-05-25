@@ -1,44 +1,37 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-type AuthState = {
-    token: string | null;
-    user: {id: string, email: string} | null
-};
-
-function loadInitialState(): AuthState {
-    try {
-        const raw = localStorage.getItem("auth");
-        if(!raw) return { token: null, user: null};
-        const parsed = JSON.parse(raw);
-        return {
-            token: parsed.token ?? null,
-            user: parsed.user ?? null,
-        };
-    } catch {
-        return { token: null, user: null};
-    }
+type User = {
+    id: string,
+    email: string
 }
 
-const initialState: AuthState = loadInitialState();
+type Status = "loading" | "authenticated" | "guest";
+
+type AuthState = {
+    user: User | null;
+    status: Status
+};
+
+const initialState: AuthState = {user: null, status: "loading"};
 
 const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setCredentials: (
+        //setCredentials
+        setUser: (
             state,
-            action: PayloadAction<{token: string, user: {id: string, email: string}}>
+            action: PayloadAction<User>
         ) => {
-            state.token = action.payload.token
-            state.user = action.payload.user;
-
+            state.user = action.payload;
+            state.status = "authenticated";
         },
-        logout: (state) => {
-            state.token = null;
+        clearUser: (state) => {
             state.user = null;
+            state.status = "guest"
         },
     },
 })
 
-export const {setCredentials, logout} = authSlice.actions;
+export const {setUser, clearUser} = authSlice.actions;
 export default authSlice.reducer;

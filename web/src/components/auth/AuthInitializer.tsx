@@ -1,21 +1,25 @@
 import {useAppDispatch, useAppSelector} from "../../store/hooks.ts";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {api} from "../../services/http.tsx";
-import {logout, setCredentials} from "../../store/authSlice.ts";
+import {clearUser, setUser} from "../../store/authSlice.ts";
 
 export function AuthInitializer({ children }: { children: React.ReactNode }) {
     const dispatch = useAppDispatch();
-    const token = useAppSelector(s => s.auth.token);
-    const [ready, setReady] = useState(false);
+    const status = useAppSelector((s) => s.auth.status);
 
     useEffect(() => {
-        if (!token) { setReady(true); return; }
         api<{ user: { id: string, email: string } } >("/api/me")
-            .then(({ user }) => dispatch(setCredentials({ token, user })))
-            .catch(() => dispatch(logout()))
-            .finally(() => setReady(true));
+            .then(({ user }) => dispatch(setUser(user)))
+            .catch(() => dispatch(clearUser()))
     }, []);
 
-    if(!ready) return <span className="loading loading-spinner" />;
+    if (status === "loading") {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-base-200">
+                <span className="loading loading-spinner loading-lg" />
+            </div>
+        );
+    }
+
     return <>{children}</>
 }

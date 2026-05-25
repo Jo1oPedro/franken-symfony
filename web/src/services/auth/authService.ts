@@ -1,7 +1,6 @@
 import {api} from "../http.tsx";
 
 type AuthResponse = {
-    token: string,
     user: {id: string, email: string}
 };
 
@@ -23,4 +22,8 @@ export async function register(name: string, email: string, password: string) {
             body: JSON.stringify({name, email, password})
         }
     );
+}
+
+export function logout() {
+    return api<null>("/api/auth/logout", { method: "POST" });
 }

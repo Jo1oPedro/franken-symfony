@@ -3,8 +3,10 @@
 namespace App\Identity\Controller;
 
 use App\Identity\DTO\LoginRequestDTO;
+use App\Identity\Service\Auth\CookieAuthIssuer;
 use App\Identity\Service\Auth\LoginUserCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
@@ -12,22 +14,28 @@ use Symfony\Component\Routing\Attribute\Route;
 final class LoginController extends AbstractController
 {
     public function __construct(
-        private LoginUserCase $loginUserCase
+        private LoginUserCase $loginUserCase,
+        private CookieAuthIssuer $cookieAuthIssuer,
     ) {}
 
     #[Route('/api/login', name: 'login')]
     public function index(
         #[MapRequestPayload] LoginRequestDTO $loginRequestDTO
-    ): Response
+    ): JsonResponse
     {
         $authResponseDTO = ($this->loginUserCase)($loginRequestDTO);
 
-        return $this->json(
+        $response = $this->json(
             [
-                "user" => ["id" => $authResponseDTO->id, "email" => $authResponseDTO->email],
-                "token" => $authResponseDTO->token
+                "user" => [
+                    "id" => $authResponseDTO->id,
+                    "email" => $authResponseDTO->email
+                ]
             ],
             Response::HTTP_OK,
         );
+
+        $this->cookieAuthIssuer->attachCookies($response, $authResponseDTO);
+        return $response;
     }
 }

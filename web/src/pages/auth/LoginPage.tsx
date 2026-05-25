@@ -4,7 +4,7 @@ import InputField from "../../components/InputField.tsx";
 import Button from "../../components/Button.tsx";
 import {login} from "../../services/auth/authService.ts";
 import {useAppDispatch} from "../../store/hooks.ts";
-import {setCredentials} from "../../store/authSlice.ts";
+import {setUser} from "../../store/authSlice.ts";
 import {useNavigate} from "react-router";
 
 const LoginPage = () => {
@@ -20,7 +20,7 @@ const LoginPage = () => {
 
         try {
             const data = await login(email, password);
-            dispatch(setCredentials(data));
+            dispatch(setUser(data.user));
             navigate("/dashboard");
         } catch (error) {
             setError("erro ao logar");

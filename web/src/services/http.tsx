@@ -1,22 +1,43 @@
 import {store} from "../store";
-import {logout} from "../store/authSlice.ts";
+import {clearUser} from "../store/authSlice.ts";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://api.localhost";
 
-export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
-    const token = store.getState().auth.token;
-    const res = await fetch(`${API_URL}${path}`, {
-       ...init,
-       headers: {
-           "Content-Type": "application/json",
-           ...(token ? { Authorization: `Bearer ${token}`}: {}),
-           ...(init.headers ?? {}),
-       }
-    });
+let refreshPromise: Promise<boolean> | null = null;
 
-    if(res.status === 401) {
-        store.dispatch(logout());
-        throw new Error("Unauthenticated");
+async function tryRefresh(): Promise<boolean> {
+    if(!refreshPromise) {
+        refreshPromise = fetch(`${API_URL}/api/auth/refresh`, {
+            method: "POST",
+            credentials: "include"
+        })
+            .then((r) => r.ok)
+            .finally(() => { refreshPromise = null; });
+    }
+
+    return refreshPromise;
+}
+
+export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
+    const doFetch = () => fetch(`${API_URL}${path}`, {
+        credentials: "include",
+        ...init,
+        headers: {
+            "Content-Type": "application/json",
+            ...(init.headers ?? {}),
+        },
+    })
+
+    let res = await doFetch();
+
+    if(res.status === 401 && path !== "/api/auth/refresh") {
+        const refreshed = await tryRefresh();
+        if(refreshed) {
+            res = await doFetch();
+        } else {
+            store.dispatch(clearUser());
+            throw new Error("Unauthenticated");
+        }
     }
 
     const data = await res.json().catch(() => null);
