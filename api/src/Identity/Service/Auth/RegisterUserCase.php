@@ -14,6 +14,7 @@ class RegisterUserCase
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
         private readonly UserPasswordHasherInterface $hasher,
+        private readonly EmailVerifier $emailVerifier,
     ) {}
 
     public function __invoke(RegisterRequestDTO $requestDTO): AuthResponseDTO
@@ -29,6 +30,7 @@ class RegisterUserCase
         );
 
         $this->userRepository->save($user);
+        $this->emailVerifier->sendVerificationEmail($user);
 
         return new AuthResponseDTO(
             id: $user->getId(),

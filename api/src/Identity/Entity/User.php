@@ -27,6 +27,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Column(type: 'json')]
     private array $roles = [];
 
+    #[Column(type: 'boolean', options: ['default' => false])]
+    private bool $isVerified = false;
+
     public function __construct(
         string $id,
         string $email,
@@ -36,6 +39,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
         $this->password = $password;
         $this->roles = ["ROLE_USER"];
+        $this->isVerified = false;
     }
 
     public function getId(): string
@@ -66,5 +70,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return $this->email;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function markAsVerified(): void
+    {
+        $this->isVerified = true;
     }
 }
