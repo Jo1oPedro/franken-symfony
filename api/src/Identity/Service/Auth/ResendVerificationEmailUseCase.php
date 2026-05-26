@@ -8,7 +8,7 @@ class ResendVerificationEmailUseCase
 {
     public function __construct(
         private UserRepositoryInterface $userRepository,
-        private EmailVerifier $emailVerifier,
+        private SendVerificationEmail   $sendVerificationEmail,
     ) {}
 
     public function __invoke(string $email): void
@@ -19,6 +19,6 @@ class ResendVerificationEmailUseCase
             return;
         }
 
-        $this->emailVerifier->sendVerificationEmail($user);
+        ($this->sendVerificationEmail)($user);
     }
 }

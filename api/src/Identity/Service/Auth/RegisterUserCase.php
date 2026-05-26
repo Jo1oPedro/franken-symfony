@@ -15,7 +15,7 @@ class RegisterUserCase
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
         private readonly UserPasswordHasherInterface $hasher,
-        private readonly EmailVerifier $emailVerifier,
+        private readonly SendVerificationEmail $sendVerificationEmail,
         private readonly TransactionManagerInterface $entityManager
     ) {}
 
@@ -34,7 +34,7 @@ class RegisterUserCase
 
 
             $this->userRepository->save($user);
-            $this->emailVerifier->sendVerificationEmail($user);
+            ($this->sendVerificationEmail)($user);
 
             return $user;
         });
