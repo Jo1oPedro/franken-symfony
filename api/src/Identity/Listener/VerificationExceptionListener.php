@@ -2,6 +2,7 @@
 
 namespace App\Identity\Listener;
 
+use App\Identity\Exception\EmailNotVerifiedException;
 use App\Identity\Exception\InvalidVerificationTokenException;
 use App\Identity\Exception\UserAlreadyVerifiedException;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -28,6 +29,16 @@ class VerificationExceptionListener
             $event->setResponse(new JsonResponse(
                 ["error" => $throwable->getMessage()],
                 Response::HTTP_CONFLICT
+            ));
+        }
+
+        if($throwable instanceof EmailNotVerifiedException) {
+            $event->setResponse(new JsonResponse(
+                [
+                    "error" => $throwable->getMessage(),
+                    "code" => "EMAIL_NOT_VERIFIED",
+                ],
+                Response::HTTP_FORBIDDEN
             ));
         }
     }
