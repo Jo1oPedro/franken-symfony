@@ -20,8 +20,9 @@ class LoginUserCase
         $user = $this->userRepository->findByEmail($loginRequestDTO->email)
             ?? throw new InvalidCredentialsException();
 
-        $this->userPasswordHasher->isPasswordValid($user, $loginRequestDTO->password)
-            ?? throw new InvalidCredentialsException();
+        if(!$this->userPasswordHasher->isPasswordValid($user, $loginRequestDTO->password)) {
+            throw new InvalidCredentialsException();
+        }
 
         return AuthResponseDTO::fromEntity($user);
     }
