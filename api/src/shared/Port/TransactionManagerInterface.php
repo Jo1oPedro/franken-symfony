@@ -1,6 +1,6 @@
 <?php
 
-namespace App\shared\Domain;
+namespace App\shared\Port;
 
 interface TransactionManagerInterface
 {

@@ -2,7 +2,7 @@
 
 namespace App\shared\Infrastructure;
 
-use App\shared\Domain\TransactionManagerInterface;
+use App\shared\Port\TransactionManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 

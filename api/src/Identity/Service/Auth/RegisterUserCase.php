@@ -6,7 +6,7 @@ use App\Identity\DTO\RegisterRequestDTO;
 use App\Identity\DTO\AuthResponseDTO;
 use App\Identity\Entity\User;
 use App\Identity\Repository\UserRepositoryInterface;
-use App\shared\Domain\TransactionManagerInterface;
+use App\shared\Port\TransactionManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
 
