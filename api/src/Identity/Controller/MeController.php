@@ -20,7 +20,8 @@ class MeController extends AbstractController
         return $this->json([
             "user" => [
                 "id" => $user->getId(),
-                "email" => $user->getEmail()
+                "email" => $user->getEmail(),
+                "verified" => $user->isVerified()
             ]
         ]);
     }

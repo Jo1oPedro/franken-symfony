@@ -4,6 +4,7 @@ import RegisterPage from "./pages/auth/RegisterPage.tsx";
 import {useAppSelector} from "./store/hooks.ts";
 import Dashboard from "./pages/board/Dashboard.tsx";
 import * as React from "react";
+import VerifyEmailPage from "./pages/auth/verifyEmail.tsx";
 
 function GuestRoute({ children }: { children: React.ReactNode }) {
     const token = useAppSelector((state) => state.auth.user);
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/login" element={<GuestRoute> <LoginPage /> </GuestRoute>} />
         <Route path="/register" element={<GuestRoute> <RegisterPage /> </GuestRoute>} />
         <Route path="/dashboard" element={<RequireAuth> <Dashboard /> </RequireAuth>} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="*" element={<RequireAuth> <Navigate to="/dashboard" replace /> </RequireAuth>}></Route>
     </Routes>
   );

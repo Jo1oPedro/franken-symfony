@@ -24,6 +24,20 @@ export async function register(name: string, email: string, password: string) {
     );
 }
 
+export async function verifyEmail(token: string) {
+    return api<null>("/api/auth/verify-email", {
+       method: "POST",
+       body: JSON.stringify({token})
+    });
+}
+
+export async function resendVerificationEmail(email: string) {
+    return api<null>("/api/auth/resend-verification-email", {
+        method: "POST",
+        body: JSON.stringify({email})
+    });
+}
+
 export function logout() {
     return api<null>("/api/auth/logout", { method: "POST" });
 }

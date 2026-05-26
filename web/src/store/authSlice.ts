@@ -2,7 +2,8 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 type User = {
     id: string,
-    email: string
+    email: string,
+    isVerified: boolean
 }
 
 type Status = "loading" | "authenticated" | "guest";
@@ -18,7 +19,6 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        //setCredentials
         setUser: (
             state,
             action: PayloadAction<User>
@@ -30,8 +30,13 @@ const authSlice = createSlice({
             state.user = null;
             state.status = "guest"
         },
+        markVerified: (state) => {
+            if(state.user) {
+                state.user.isVerified = true;
+            }
+        }
     },
 })
 
-export const {setUser, clearUser} = authSlice.actions;
+export const {setUser, clearUser, markVerified} = authSlice.actions;
 export default authSlice.reducer;

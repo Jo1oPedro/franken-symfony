@@ -29,7 +29,8 @@ final class LoginController extends AbstractController
             [
                 "user" => [
                     "id" => $authResponseDTO->id,
-                    "email" => $authResponseDTO->email
+                    "email" => $authResponseDTO->email,
+                    "verified" => $authResponseDTO->verified
                 ]
             ],
             Response::HTTP_OK,

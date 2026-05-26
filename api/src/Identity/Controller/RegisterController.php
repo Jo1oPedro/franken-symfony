@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class RegisterController extends AbstractController
 {
     public function __construct(
-        private readonly RegisterUser               $registerUserCase,
+        private readonly RegisterUser $registerUserCase,
         private readonly AttachAuthCookiesToRequest $attachAuthCookiesToRequest,
     ) {}
 
@@ -28,7 +28,8 @@ final class RegisterController extends AbstractController
             [
                 "user" => [
                     "id" => $authResponseDTO->id,
-                    "email" => $authResponseDTO->email
+                    "email" => $authResponseDTO->email,
+                    "verified" => $authResponseDTO->verified,
                 ],
             ],
             Response::HTTP_CREATED

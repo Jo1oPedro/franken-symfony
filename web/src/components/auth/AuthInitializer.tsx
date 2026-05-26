@@ -8,7 +8,7 @@ export function AuthInitializer({ children }: { children: React.ReactNode }) {
     const status = useAppSelector((s) => s.auth.status);
 
     useEffect(() => {
-        api<{ user: { id: string, email: string } } >("/api/me")
+        api<{ user: { id: string, email: string, isVerified: boolean } } >("/api/me")
             .then(({ user }) => dispatch(setUser(user)))
             .catch(() => dispatch(clearUser()))
     }, []);
