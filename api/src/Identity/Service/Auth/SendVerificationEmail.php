@@ -9,14 +9,14 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 
-final class SendVerificationEmail
+final readonly class SendVerificationEmail
 {
     private const TOKEN_TTL = "+24 hours";
 
     public function __construct(
-        private readonly EmailVerificationTokenRepositoryInterface $emailVerificationTokenRepository,
-        private readonly MailerInterface $mailer,
-        private readonly string $mailerFrom,
+        private EmailVerificationTokenRepositoryInterface $emailVerificationTokenRepository,
+        private MailerInterface $mailer,
+        private string $mailerFrom,
     ) {}
 
     public function __invoke(User $user): void

@@ -3,7 +3,7 @@
 namespace App\Identity\Controller;
 
 use App\Identity\DTO\LoginRequestDTO;
-use App\Identity\Service\Auth\CookieAuthIssuer;
+use App\Identity\Service\Auth\AttachAuthCookiesToRequest;
 use App\Identity\Service\Auth\LoginUserCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,7 +15,7 @@ final class LoginController extends AbstractController
 {
     public function __construct(
         private LoginUserCase $loginUserCase,
-        private CookieAuthIssuer $cookieAuthIssuer,
+        private AttachAuthCookiesToRequest $attachAuthCookiesToRequest,
     ) {}
 
     #[Route('/api/login', name: 'login')]
@@ -35,7 +35,7 @@ final class LoginController extends AbstractController
             Response::HTTP_OK,
         );
 
-        $this->cookieAuthIssuer->attachCookies($response, $authResponseDTO);
+        ($this->attachAuthCookiesToRequest)($response, $authResponseDTO);
         return $response;
     }
 }

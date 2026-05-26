@@ -3,7 +3,7 @@
 namespace App\Identity\Controller;
 
 use App\Identity\Entity\RefreshToken;
-use App\Identity\Service\Auth\CookieAuthIssuer;
+use App\Identity\Service\Auth\ClearAuthCookies;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,7 +13,7 @@ class LogoutController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private CookieAuthIssuer $cookieAuthIssuer
+        private ClearAuthCookies $clearAuthCookies
     ) {}
 
     public function __invoke(Request $request): JsonResponse
@@ -29,7 +29,8 @@ class LogoutController extends AbstractController
         }
 
         $response = new JsonResponse(status: 204);
-        $this->cookieAuthIssuer->clearCookies($response);
+        ($this->clearAuthCookies)($response);
+
         return $response;
     }
 }

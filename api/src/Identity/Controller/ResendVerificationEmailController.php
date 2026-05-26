@@ -3,7 +3,7 @@
 namespace App\Identity\Controller;
 
 use App\Identity\DTO\ResendVerificationEmailRequestDTO;
-use App\Identity\Service\Auth\ResendVerificationEmailUseCase;
+use App\Identity\Service\Auth\ResendVerificationEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ResendVerificationEmailController extends AbstractController
 {
     public function __construct(
-        private readonly ResendVerificationEmailUseCase $resendUseCase
+        private readonly ResendVerificationEmail $resendUseCase
     ) {}
 
     #[Route("/api/auth/resend-verification-email", methods: ["POST"])]

@@ -8,11 +8,11 @@ use App\Identity\Exception\InvalidCredentialsException;
 use App\Identity\Repository\UserRepositoryInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class LoginUserCase
+final readonly class LoginUserCase
 {
     public function __construct(
-        private readonly UserRepositoryInterface $userRepository,
-        private readonly UserPasswordHasherInterface $userPasswordHasher
+        private UserRepositoryInterface $userRepository,
+        private UserPasswordHasherInterface $userPasswordHasher
     ) {}
 
     public function __invoke(LoginRequestDTO $loginRequestDTO): AuthResponseDTO

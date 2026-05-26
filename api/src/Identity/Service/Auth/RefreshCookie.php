@@ -7,11 +7,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class RefreshCookie
+final readonly class RefreshCookie
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private CookieAuthIssuer $cookieAuthIssuer
+        private AttachAuthCookiesToRequest $attachAuthCookiesToRequest
     ) {}
 
     public function __invoke(Request $request): JsonResponse
@@ -33,7 +33,8 @@ class RefreshCookie
         $this->entityManager->flush();
 
         $response = new JsonResponse(status: 204);
-        $this->cookieAuthIssuer->attachCookies($response, $refresh->getUser());
+        ($this->attachAuthCookiesToRequest)($response, $refresh->getUser());
+
         return $response;
     }
 }

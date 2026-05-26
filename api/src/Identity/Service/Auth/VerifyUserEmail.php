@@ -7,11 +7,11 @@ use App\Identity\Exception\UserAlreadyVerifiedException;
 use App\Identity\Repository\EmailVerificationTokenRepositoryInterface;
 use App\Identity\Repository\UserRepositoryInterface;
 
-class VerifyUserEmail
+final readonly class VerifyUserEmail
 {
     public function __construct(
-        private readonly EmailVerificationTokenRepositoryInterface $emailVerifierRepository,
-        private readonly UserRepositoryInterface $userRepository,
+        private EmailVerificationTokenRepositoryInterface $emailVerifierRepository,
+        private UserRepositoryInterface $userRepository,
     ) {}
 
     public function __invoke(string $token): void

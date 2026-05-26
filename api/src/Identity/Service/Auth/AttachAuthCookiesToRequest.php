@@ -10,7 +10,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
-class CookieAuthIssuer
+final readonly class AttachAuthCookiesToRequest
 {
     public function __construct(
         private JWTTokenManagerInterface $jwtTokenManager,
@@ -19,7 +19,7 @@ class CookieAuthIssuer
         private string $environment
     ) {}
 
-    public function attachCookies(Response $response, AuthResponseDTO $user): void
+    public function __invoke(Response $response, AuthResponseDTO $user): void
     {
         $user = $this->userRepository->findByEmail($user->email);
         $accessJwt = $this->jwtTokenManager->create($user);
@@ -51,11 +51,5 @@ class CookieAuthIssuer
                 ->withPath("/api/auth")
                 ->withExpires($refreshExpires->getTimestamp())
         );
-    }
-
-    public function clearCookies(Response $response): void
-    {
-        $response->headers->clearCookie("auth_token", "/");
-        $response->headers->clearCookie("refresh_token", "/api/auth");
     }
 }

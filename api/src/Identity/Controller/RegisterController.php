@@ -3,8 +3,8 @@
 namespace App\Identity\Controller;
 
 use App\Identity\DTO\RegisterRequestDTO;
-use App\Identity\Service\Auth\CookieAuthIssuer;
-use App\Identity\Service\Auth\RegisterUserCase;
+use App\Identity\Service\Auth\AttachAuthCookiesToRequest;
+use App\Identity\Service\Auth\RegisterUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +14,8 @@ use Symfony\Component\Routing\Attribute\Route;
 final class RegisterController extends AbstractController
 {
     public function __construct(
-        private readonly RegisterUserCase $registerUserCase,
-        private readonly CookieAuthIssuer $cookieAuthIssuer,
+        private readonly RegisterUser               $registerUserCase,
+        private readonly AttachAuthCookiesToRequest $attachAuthCookiesToRequest,
     ) {}
 
     #[Route("/api/register", methods: ["POST"])]
@@ -34,7 +34,7 @@ final class RegisterController extends AbstractController
             Response::HTTP_CREATED
         );
 
-        $this->cookieAuthIssuer->attachCookies($response, $authResponseDTO);
+        ($this->attachAuthCookiesToRequest)($response, $authResponseDTO);
 
         return $response;
     }

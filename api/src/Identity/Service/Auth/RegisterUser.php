@@ -10,13 +10,13 @@ use App\shared\Port\TransactionManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
 
-class RegisterUserCase
+final readonly class RegisterUser
 {
     public function __construct(
-        private readonly UserRepositoryInterface $userRepository,
-        private readonly UserPasswordHasherInterface $hasher,
-        private readonly SendVerificationEmail $sendVerificationEmail,
-        private readonly TransactionManagerInterface $entityManager
+        private UserRepositoryInterface     $userRepository,
+        private UserPasswordHasherInterface $hasher,
+        private SendVerificationEmail       $sendVerificationEmail,
+        private TransactionManagerInterface $entityManager
     ) {}
 
     public function __invoke(RegisterRequestDTO $requestDTO): AuthResponseDTO

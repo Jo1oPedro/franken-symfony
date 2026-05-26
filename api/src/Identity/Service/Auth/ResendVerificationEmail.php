@@ -4,7 +4,7 @@ namespace App\Identity\Service\Auth;
 
 use App\Identity\Repository\UserRepositoryInterface;
 
-class ResendVerificationEmailUseCase
+final readonly class ResendVerificationEmail
 {
     public function __construct(
         private UserRepositoryInterface $userRepository,
