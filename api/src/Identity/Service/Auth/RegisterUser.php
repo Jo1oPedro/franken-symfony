@@ -41,7 +41,8 @@ final readonly class RegisterUser
 
         return new AuthResponseDTO(
             id: $user->getId(),
-            email: $user->getEmail()
+            email: $user->getEmail(),
+            verified: $user->isVerified(),
         );
     }
 }
