@@ -21,6 +21,8 @@ final class EmailVerifier
 
     public function sendVerificationEmail(User $user): void
     {
+        $this->emailVerificationTokenRepository->revokeActiveTokensForUser($user);
+
         $token = $this->createToken($user);
 
         $verifyUrl = sprintf(
