@@ -7,7 +7,7 @@ use App\Identity\Exception\UserAlreadyVerifiedException;
 use App\Identity\Repository\EmailVerificationTokenRepositoryInterface;
 use App\Identity\Repository\UserRepositoryInterface;
 
-class VerifyEmailUseCase
+class VerifyUserEmail
 {
     public function __construct(
         private readonly EmailVerificationTokenRepositoryInterface $emailVerifierRepository,

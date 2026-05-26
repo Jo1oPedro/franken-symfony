@@ -3,7 +3,7 @@
 namespace App\Identity\Controller;
 
 use App\Identity\DTO\VerifyEmailRequestDTO;
-use App\Identity\Service\Auth\VerifyEmailUseCase;
+use App\Identity\Service\Auth\VerifyUserEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class VerifyEmailController extends AbstractController
 {
     public function __construct(
-        private readonly VerifyEmailUseCase $verifyEmailUseCase,
+        private readonly VerifyUserEmail $verifyEmailUseCase,
     ) {}
 
     #[Route("/api/auth/verify-email", methods: ["POST"], name: "verify-email")]
