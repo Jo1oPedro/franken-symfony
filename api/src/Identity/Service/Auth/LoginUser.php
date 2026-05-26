@@ -8,7 +8,7 @@ use App\Identity\Exception\InvalidCredentialsException;
 use App\Identity\Repository\UserRepositoryInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-final readonly class LoginUserCase
+final readonly class LoginUser
 {
     public function __construct(
         private UserRepositoryInterface $userRepository,

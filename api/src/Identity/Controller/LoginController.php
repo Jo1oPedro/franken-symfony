@@ -4,7 +4,7 @@ namespace App\Identity\Controller;
 
 use App\Identity\DTO\LoginRequestDTO;
 use App\Identity\Service\Auth\AttachAuthCookiesToRequest;
-use App\Identity\Service\Auth\LoginUserCase;
+use App\Identity\Service\Auth\LoginUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class LoginController extends AbstractController
 {
     public function __construct(
-        private LoginUserCase $loginUserCase,
+        private LoginUser $loginUserCase,
         private AttachAuthCookiesToRequest $attachAuthCookiesToRequest,
     ) {}
 
