@@ -1,7 +1,7 @@
 import {api} from "../http.tsx";
 
 type AuthResponse = {
-    user: {id: string, email: string}
+    user: {id: string, email: string, isVerified: boolean}
 };
 
 export async function login(email: string, password: string) {
