@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Identity\Controller;
 
+use App\Identity\DTO\AuthResponseDTO;
 use App\Identity\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,11 +21,7 @@ class MeController extends AbstractController
         }
 
         return $this->json([
-            'user' => [
-                'id' => $user->getId(),
-                'email' => $user->getEmail(),
-                'verified' => $user->isVerified(),
-            ],
+            'user' => AuthResponseDTO::fromEntity($user),
         ]);
     }
 }
