@@ -43,6 +43,11 @@ class EmailVerificationToken
         $this->expiresAt = $expiresAt;
     }
 
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
     public function getUser(): User
     {
         return $this->user;
