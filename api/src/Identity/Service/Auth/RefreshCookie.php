@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace App\Identity\Service\Auth;
 
 use App\Identity\DTO\AuthResponseDTO;
-use App\Identity\Entity\RefreshToken;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Identity\Repository\RefreshTokenInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 final readonly class RefreshCookie
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
+        private RefreshTokenInterface $refreshToken,
         private AttachAuthCookiesToRequest $attachAuthCookiesToRequest,
     ) {
     }
@@ -26,15 +25,14 @@ final readonly class RefreshCookie
         }
 
         $hash = hash('sha256', $plain);
-        $refresh = $this->entityManager->getRepository(RefreshToken::class)
-            ->findOneBy(['token' => $hash]);
+        $refresh = $this->refreshToken->findByToken($hash);
 
         if (!$refresh || !$refresh->isValid()) {
             return new JsonResponse(['error' => 'Invalid refresh token'], 401);
         }
 
         $refresh->revoke();
-        $this->entityManager->flush();
+        $this->refreshToken->save($refresh);
 
         $response = new JsonResponse(status: 204);
         ($this->attachAuthCookiesToRequest)(

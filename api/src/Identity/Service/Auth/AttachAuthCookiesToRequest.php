@@ -6,8 +6,8 @@ namespace App\Identity\Service\Auth;
 
 use App\Identity\DTO\AuthResponseDTO;
 use App\Identity\Entity\RefreshToken;
+use App\Identity\Repository\RefreshTokenInterface;
 use App\Identity\Repository\UserRepositoryInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +17,7 @@ final readonly class AttachAuthCookiesToRequest
 {
     public function __construct(
         private JWTTokenManagerInterface $jwtTokenManager,
-        private EntityManagerInterface $entityManager,
+        private RefreshTokenInterface $refreshToken,
         private UserRepositoryInterface $userRepository,
         // private string $environment
     ) {
@@ -38,8 +38,7 @@ final readonly class AttachAuthCookiesToRequest
         $refreshPlain = bin2hex(random_bytes(48));
         $refreshExpires = new \DateTimeImmutable('+7 days');
         $refresh = new RefreshToken($userRecord, hash('sha256', $refreshPlain), $refreshExpires);
-        $this->entityManager->persist($refresh);
-        $this->entityManager->flush();
+        $this->refreshToken->save($refresh);
 
         // $secure = $this->environment === "prod";
 
