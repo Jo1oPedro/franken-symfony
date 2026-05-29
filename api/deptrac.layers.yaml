@@ -1,0 +1,40 @@
+deptrac:
+    paths:
+        - ./src
+    layers:
+        - name: Controller
+          collectors:
+              - type: directory
+                value: src/.*/Controller/.*
+        - name: Service
+          collectors:
+              - type: directory
+                value: src/.*/Service/.*
+        - name: Repository
+          collectors:
+              - type: directory
+                value: src/.*/Repository/.*
+        - name: DTO
+          collectors:
+              - type: directory
+                value: src/.*/DTO/.*
+        - name: Entity
+          collectors:
+              - type: directory
+                value: src/.*/Entity/.*
+    ruleset:
+        Controller:
+            - Service
+            - DTO
+        Service:
+            - Repository
+            - DTO
+            - Entity
+        Repository:
+            - Entity
+        DTO:
+            - Entity
+        Entity: ~
+    skip_violations:
+        App\Identity\Controller\MeController:
+            - App\Identity\Entity\User

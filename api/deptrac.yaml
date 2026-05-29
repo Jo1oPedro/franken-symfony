@@ -1,0 +1,25 @@
+deptrac:
+    paths:
+        - ./src
+    exclude_files:
+        - '#.*test.*#'
+    layers:
+        -   name: Shared
+            collectors:
+                -   type: directory
+                    value: src/shared/.*
+        -   name: Identity
+            collectors:
+                -   type: directory
+                    value: src/Identity/.*
+        # Quando criar o módulo Board, é só adicionar:
+        # - name: Board
+        #   collectors:
+        #     - type: classNameRegex
+        #       value: ^App\\Board\\
+    ruleset:
+        Shared: ~
+        Identity:
+            - Shared
+        # Board:
+        #   - Shared
