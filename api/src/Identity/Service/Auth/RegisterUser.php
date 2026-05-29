@@ -13,9 +13,9 @@ use Symfony\Component\Uid\Uuid;
 final readonly class RegisterUser
 {
     public function __construct(
-        private UserRepositoryInterface     $userRepository,
+        private UserRepositoryInterface $userRepository,
         private UserPasswordHasherInterface $hasher,
-        private SendVerificationEmail       $sendVerificationEmail,
+        private SendVerificationEmail $sendVerificationEmail,
         private TransactionManagerInterface $entityManager
     ) {}
 
