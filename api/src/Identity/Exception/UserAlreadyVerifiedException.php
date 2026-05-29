@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Exception;
 
 use App\shared\Exception\HasHttpRepresentation;
@@ -9,7 +11,7 @@ class UserAlreadyVerifiedException extends \DomainException implements HasHttpRe
 {
     public function __construct()
     {
-        parent::__construct("User is already verified");
+        parent::__construct('User is already verified');
     }
 
     public function getStatusCode(): int
@@ -19,6 +21,6 @@ class UserAlreadyVerifiedException extends \DomainException implements HasHttpRe
 
     public function getErrorCode(): string
     {
-        return "USER_ALREADY_VERIFIED";
+        return 'USER_ALREADY_VERIFIED';
     }
 }

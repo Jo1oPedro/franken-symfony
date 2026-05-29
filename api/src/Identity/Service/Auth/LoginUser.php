@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Service\Auth;
 
 use App\Identity\DTO\AuthResponseDTO;
@@ -12,15 +14,16 @@ final readonly class LoginUser
 {
     public function __construct(
         private UserRepositoryInterface $userRepository,
-        private UserPasswordHasherInterface $userPasswordHasher
-    ) {}
+        private UserPasswordHasherInterface $userPasswordHasher,
+    ) {
+    }
 
     public function __invoke(LoginRequestDTO $loginRequestDTO): AuthResponseDTO
     {
         $user = $this->userRepository->findByEmail($loginRequestDTO->email)
             ?? throw new InvalidCredentialsException();
 
-        if(!$this->userPasswordHasher->isPasswordValid($user, $loginRequestDTO->password)) {
+        if (!$this->userPasswordHasher->isPasswordValid($user, $loginRequestDTO->password)) {
             throw new InvalidCredentialsException();
         }
 

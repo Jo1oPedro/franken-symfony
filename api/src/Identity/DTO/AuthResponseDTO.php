@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\DTO;
 
 use App\Identity\Entity\User;
@@ -10,7 +12,8 @@ final readonly class AuthResponseDTO
         public string $id,
         public string $email,
         public bool $verified,
-    ) {}
+    ) {
+    }
 
     public static function fromEntity(User $user): self
     {

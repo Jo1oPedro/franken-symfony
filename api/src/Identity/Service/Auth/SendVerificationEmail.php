@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Service\Auth;
 
 use App\Identity\Entity\EmailVerificationToken;
@@ -11,13 +13,14 @@ use Symfony\Component\Mime\Address;
 
 final readonly class SendVerificationEmail
 {
-    private const TOKEN_TTL = "+24 hours";
+    private const TOKEN_TTL = '+24 hours';
 
     public function __construct(
         private EmailVerificationTokenRepositoryInterface $emailVerificationTokenRepository,
         private MailerInterface $mailer,
         private string $mailerFrom,
-    ) {}
+    ) {
+    }
 
     public function __invoke(User $user): void
     {
@@ -25,20 +28,20 @@ final readonly class SendVerificationEmail
 
         $token = $this->createToken($user);
 
-        $verifyUrl = sprintf(
-            "%s/verify-email?token=%s",
-            "app.localhost",
+        $verifyUrl = \sprintf(
+            '%s/verify-email?token=%s',
+            'app.localhost',
             $token->getToken()
         );
 
         $email = (new TemplatedEmail())
-            ->from(new Address($this->mailerFrom, "Todo App"))
+            ->from(new Address($this->mailerFrom, 'Todo App'))
             ->to($user->getEmail())
-            ->subject("Verify your email address")
-            ->htmlTemplate("emails/verify_email.html.twig")
+            ->subject('Verify your email address')
+            ->htmlTemplate('emails/verify_email.html.twig')
             ->context([
-                "verifyUrl" => $verifyUrl,
-                "expiresInHours" => 24
+                'verifyUrl' => $verifyUrl,
+                'expiresInHours' => 24,
             ]);
 
         $this->mailer->send($email);

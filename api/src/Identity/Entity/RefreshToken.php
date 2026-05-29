@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Entity;
 
 use Doctrine\ORM\Mapping\Column;
@@ -15,20 +17,20 @@ use Symfony\Component\Uid\Uuid;
 class RefreshToken
 {
     #[Id]
-    #[Column(type: "uuid", unique: true)]
+    #[Column(type: 'uuid', unique: true)]
     private string $id;
 
-    #[Column(type: "string", length: 128, unique: true)]
+    #[Column(type: 'string', length: 128, unique: true)]
     private string $token;
 
     #[ManyToOne(targetEntity: User::class)]
     #[JoinColumn(nullable: false)]
     private User $user;
 
-    #[Column(type: "datetime_immutable")]
+    #[Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $expiresAt;
 
-    #[Column(type: "datetime_immutable", nullable: true)]
+    #[Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $revokedAt = null;
 
     public function __construct(
@@ -59,7 +61,7 @@ class RefreshToken
 
     public function isValid(): bool
     {
-        return $this->revokedAt === null && $this->expiresAt > new \DateTimeImmutable();
+        return null === $this->revokedAt && $this->expiresAt > new \DateTimeImmutable();
     }
 
     public function revoke(): void

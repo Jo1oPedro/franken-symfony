@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Exception;
 
 use App\shared\Exception\HasHttpRepresentation;
@@ -9,7 +11,7 @@ class InvalidVerificationTokenException extends \DomainException implements HasH
 {
     public function __construct()
     {
-        parent::__construct("Invalid or expired verification token.");
+        parent::__construct('Invalid or expired verification token.');
     }
 
     public function getStatusCode(): int
@@ -19,6 +21,6 @@ class InvalidVerificationTokenException extends \DomainException implements HasH
 
     public function getErrorCode(): string
     {
-        return "INVALID_VERIFICATION_TOKEN";
+        return 'INVALID_VERIFICATION_TOKEN';
     }
 }

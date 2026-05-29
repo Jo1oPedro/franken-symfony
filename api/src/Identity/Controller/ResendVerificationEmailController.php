@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Controller;
 
 use App\Identity\DTO\ResendVerificationEmailRequestDTO;
@@ -14,15 +16,15 @@ use Symfony\Component\Routing\Attribute\Route;
 class ResendVerificationEmailController extends AbstractController
 {
     public function __construct(
-        private readonly ResendVerificationEmail $resendUseCase
-    ) {}
+        private readonly ResendVerificationEmail $resendUseCase,
+    ) {
+    }
 
-    #[Route("/api/auth/resend-verification-email", methods: ["POST"])]
-    #[RateLimit(limiter: "resend_verification_email", by: "ip")]
+    #[Route('/api/auth/resend-verification-email', methods: ['POST'])]
+    #[RateLimit(limiter: 'resend_verification_email', by: 'ip')]
     public function __invoke(
-        #[MapRequestPayload] ResendVerificationEmailRequestDTO $resendVerificationEmailRequestDTO
-    ): JsonResponse
-    {
+        #[MapRequestPayload] ResendVerificationEmailRequestDTO $resendVerificationEmailRequestDTO,
+    ): JsonResponse {
         ($this->resendUseCase)($resendVerificationEmailRequestDTO->email);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Exception;
 
 use App\shared\Exception\HasHttpRepresentation;
@@ -9,7 +11,7 @@ class InvalidCredentialsException extends \DomainException implements HasHttpRep
 {
     public function __construct()
     {
-        parent::__construct("Invalid credentials.");
+        parent::__construct('Invalid credentials.');
     }
 
     public function getStatusCode(): int
@@ -19,6 +21,6 @@ class InvalidCredentialsException extends \DomainException implements HasHttpRep
 
     public function getErrorCode(): string
     {
-        return "INVALID_CREDENTIALS";
+        return 'INVALID_CREDENTIALS';
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Repository;
 
 use App\Identity\Entity\User;
@@ -12,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
 final class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface
 {
     public function __construct(
-        private ManagerRegistry $registry
+        private ManagerRegistry $registry,
     ) {
         parent::__construct($this->registry, User::class);
     }
@@ -25,6 +27,6 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
 
     public function findByEmail(string $email): ?User
     {
-        return $this->findOneBy(["email" => $email]);
+        return $this->findOneBy(['email' => $email]);
     }
 }

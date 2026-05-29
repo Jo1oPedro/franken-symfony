@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\shared\EventListener;
 
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -17,21 +19,20 @@ final class ValidationExceptionListener
         $exception = $event->getThrowable();
         $previous = $exception->getPrevious();
 
-        if(!$previous instanceof ValidationFailedException) {
+        if (!$previous instanceof ValidationFailedException) {
             return;
         }
 
         $errors = [];
-        foreach($previous->getViolations() as $violation) {
+        foreach ($previous->getViolations() as $violation) {
             $errors[$violation->getPropertyPath()] = $violation->getMessage();
         }
 
         $event->setResponse(
             new JsonResponse(
-                ["errors" => $errors],
+                ['errors' => $errors],
                 status: Response::HTTP_UNPROCESSABLE_ENTITY
             ),
-
         );
     }
 }

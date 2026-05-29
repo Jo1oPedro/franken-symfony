@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Controller;
 
 use App\Identity\DTO\VerifyEmailRequestDTO;
@@ -14,13 +16,13 @@ class VerifyEmailController extends AbstractController
 {
     public function __construct(
         private readonly VerifyUserEmail $verifyEmailUseCase,
-    ) {}
+    ) {
+    }
 
-    #[Route("/api/auth/verify-email", methods: ["POST"], name: "verify-email")]
+    #[Route('/api/auth/verify-email', methods: ['POST'], name: 'verify-email')]
     public function __invoke(
-        #[MapRequestPayload] VerifyEmailRequestDTO $verifyEmailRequestDTO
-    ): JsonResponse
-    {
+        #[MapRequestPayload] VerifyEmailRequestDTO $verifyEmailRequestDTO,
+    ): JsonResponse {
         ($this->verifyEmailUseCase)($verifyEmailRequestDTO->token);
 
         return $this->json(null, Response::HTTP_NO_CONTENT);

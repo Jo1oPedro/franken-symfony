@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Service\Auth;
 
 use App\Identity\Exception\InvalidVerificationTokenException;
@@ -12,19 +14,20 @@ final readonly class VerifyUserEmail
     public function __construct(
         private EmailVerificationTokenRepositoryInterface $emailVerifierRepository,
         private UserRepositoryInterface $userRepository,
-    ) {}
+    ) {
+    }
 
     public function __invoke(string $token): void
     {
         $verificationToken = $this->emailVerifierRepository->findByToken($token);
 
-        if($verificationToken === null || !$verificationToken->isUsable()) {
+        if (null === $verificationToken || !$verificationToken->isUsable()) {
             throw new InvalidVerificationTokenException();
         }
 
         $user = $verificationToken->getUser();
 
-        if($user->isVerified()) {
+        if ($user->isVerified()) {
             throw new UserAlreadyVerifiedException();
         }
 

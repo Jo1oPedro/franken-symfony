@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Service\Auth;
 
 use App\Identity\DTO\AuthResponseDTO;
@@ -17,14 +19,15 @@ final readonly class AttachAuthCookiesToRequest
         private JWTTokenManagerInterface $jwtTokenManager,
         private EntityManagerInterface $entityManager,
         private UserRepositoryInterface $userRepository,
-        //private string $environment
-    ) {}
+        // private string $environment
+    ) {
+    }
 
     public function __invoke(Response $response, AuthResponseDTO $user): void
     {
         $userRecord = $this->userRepository->findByEmail($user->email);
 
-        if(!$userRecord) {
+        if (!$userRecord) {
             $exception = new UserNotFoundException();
             $exception->setUserIdentifier($user->email);
             throw $exception;
@@ -33,30 +36,30 @@ final readonly class AttachAuthCookiesToRequest
         $accessJwt = $this->jwtTokenManager->create($userRecord);
 
         $refreshPlain = bin2hex(random_bytes(48));
-        $refreshExpires = new \DateTimeImmutable("+7 days");
+        $refreshExpires = new \DateTimeImmutable('+7 days');
         $refresh = new RefreshToken($userRecord, hash('sha256', $refreshPlain), $refreshExpires);
         $this->entityManager->persist($refresh);
         $this->entityManager->flush();
 
-        //$secure = $this->environment === "prod";
+        // $secure = $this->environment === "prod";
 
         $response->headers->setCookie(
-            Cookie::create("auth_token")
+            Cookie::create('auth_token')
                 ->withValue($accessJwt)
                 ->withHttpOnly(true)
                 ->withSecure(true)
                 ->withSameSite(Cookie::SAMESITE_NONE)
-                ->withPath("/")
+                ->withPath('/')
                 ->withExpires(time() + 3600)
         );
 
         $response->headers->setCookie(
-            Cookie::create("refresh_token")
+            Cookie::create('refresh_token')
                 ->withValue($refreshPlain)
                 ->withHttpOnly(true)
                 ->withSecure(true)
                 ->withSameSite(Cookie::SAMESITE_NONE)
-                ->withPath("/api/auth")
+                ->withPath('/api/auth')
                 ->withExpires($refreshExpires->getTimestamp())
         );
     }

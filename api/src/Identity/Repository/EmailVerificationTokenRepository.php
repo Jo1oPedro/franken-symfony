@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Repository;
 
 use App\Identity\Entity\EmailVerificationToken;
@@ -30,13 +32,13 @@ class EmailVerificationTokenRepository extends ServiceEntityRepository implement
 
     public function revokeActiveTokensForUser(User $user): void
     {
-        $this->createQueryBuilder("t")
+        $this->createQueryBuilder('t')
             ->update()
-            ->set("t.consumedAt", ":now")
-            ->where("t.user = :user")
-            ->andWhere("t.consumedAt IS NULL")
-            ->setParameter("now", new \DateTime())
-            ->setParameter("user", $user)
+            ->set('t.consumedAt', ':now')
+            ->where('t.user = :user')
+            ->andWhere('t.consumedAt IS NULL')
+            ->setParameter('now', new \DateTime())
+            ->setParameter('user', $user)
             ->getQuery()
             ->execute();
     }

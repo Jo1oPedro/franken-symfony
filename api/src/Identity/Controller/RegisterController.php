@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Controller;
 
 use App\Identity\DTO\RegisterRequestDTO;
@@ -17,21 +19,22 @@ final class RegisterController extends AbstractController
     public function __construct(
         private readonly RegisterUser $registerUserCase,
         private readonly AttachAuthCookiesToRequest $attachAuthCookiesToRequest,
-    ) {}
+    ) {
+    }
 
-    #[Route("/api/register", methods: ["POST"])]
-    #[RateLimit(limiter: "register", by: "ip")]
+    #[Route('/api/register', methods: ['POST'])]
+    #[RateLimit(limiter: 'register', by: 'ip')]
     public function __invoke(
-        #[MapRequestPayload] RegisterRequestDTO $request
+        #[MapRequestPayload] RegisterRequestDTO $request,
     ): JsonResponse {
         $authResponseDTO = ($this->registerUserCase)($request);
 
         $response = $this->json(
             [
-                "user" => [
-                    "id" => $authResponseDTO->id,
-                    "email" => $authResponseDTO->email,
-                    "verified" => $authResponseDTO->verified,
+                'user' => [
+                    'id' => $authResponseDTO->id,
+                    'email' => $authResponseDTO->email,
+                    'verified' => $authResponseDTO->verified,
                 ],
             ],
             Response::HTTP_CREATED

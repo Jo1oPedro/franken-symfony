@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Service\Auth;
 
-use App\Identity\DTO\RegisterRequestDTO;
 use App\Identity\DTO\AuthResponseDTO;
+use App\Identity\DTO\RegisterRequestDTO;
 use App\Identity\Entity\User;
 use App\Identity\Repository\UserRepositoryInterface;
 use App\shared\Port\TransactionManagerInterface;
@@ -16,22 +18,22 @@ final readonly class RegisterUser
         private UserRepositoryInterface $userRepository,
         private UserPasswordHasherInterface $hasher,
         private SendVerificationEmail $sendVerificationEmail,
-        private TransactionManagerInterface $entityManager
-    ) {}
+        private TransactionManagerInterface $entityManager,
+    ) {
+    }
 
     public function __invoke(RegisterRequestDTO $requestDTO): AuthResponseDTO
     {
         $user = $this->entityManager->transactional(function () use ($requestDTO): User {
-            $tempUser = new User(Uuid::v7()->toRfc4122(), $requestDTO->email, "");
+            $tempUser = new User(Uuid::v7()->toRfc4122(), $requestDTO->email, '');
 
             $hashedPassword = $this->hasher->hashPassword($tempUser, $requestDTO->password);
 
             $user = new User(
                 id: $tempUser->getId(),
-                email :$tempUser->getEmail(),
+                email : $tempUser->getEmail(),
                 password: $hashedPassword
             );
-
 
             $this->userRepository->save($user);
             ($this->sendVerificationEmail)($user);

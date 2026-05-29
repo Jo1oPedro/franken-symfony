@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Entity;
 
 use App\Identity\Repository\EmailVerificationTokenRepository;
@@ -12,24 +14,24 @@ use Doctrine\ORM\Mapping\Table;
 use Symfony\Component\Uid\Uuid;
 
 #[Entity(repositoryClass: EmailVerificationTokenRepository::class)]
-#[Table(name: "email_verification_tokens")]
+#[Table(name: 'email_verification_tokens')]
 class EmailVerificationToken
 {
     #[Id]
-    #[Column(type: "uuid", unique: true)]
+    #[Column(type: 'uuid', unique: true)]
     private string $id;
 
-    #[Column(type: "string", length: 128, unique: true)]
+    #[Column(type: 'string', length: 128, unique: true)]
     private string $token;
 
     #[ManyToOne(targetEntity: User::class)]
     #[JoinColumn(nullable: false)]
     private User $user;
 
-    #[Column(type: "datetime_immutable")]
+    #[Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $expiresAt;
 
-    #[Column(type: "datetime_immutable", nullable: true)]
+    #[Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $consumedAt = null;
 
     public function __construct(
@@ -60,14 +62,14 @@ class EmailVerificationToken
 
     public function isUsable(): bool
     {
-        return $this->consumedAt === null
+        return null === $this->consumedAt
             && $this->expiresAt > new \DateTimeImmutable();
     }
 
     public function consume(): void
     {
-        if($this->consumedAt !== null) {
-            throw new \DomainException("Token already consumed");
+        if (null !== $this->consumedAt) {
+            throw new \DomainException('Token already consumed');
         }
         $this->consumedAt = new \DateTimeImmutable();
     }

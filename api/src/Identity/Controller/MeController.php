@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Controller;
 
 use App\Identity\Entity\User;
@@ -10,19 +12,19 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class MeController extends AbstractController
 {
-    #[Route("/api/me", methods: ["GET"])]
+    #[Route('/api/me', methods: ['GET'])]
     public function __invoke(#[CurrentUser] ?User $user): JsonResponse
     {
-        if(!$user) {
-            return $this->json(["error" => "Unauthorized"], 401);
+        if (!$user) {
+            return $this->json(['error' => 'Unauthorized'], 401);
         }
 
         return $this->json([
-            "user" => [
-                "id" => $user->getId(),
-                "email" => $user->getEmail(),
-                "verified" => $user->isVerified()
-            ]
+            'user' => [
+                'id' => $user->getId(),
+                'email' => $user->getEmail(),
+                'verified' => $user->isVerified(),
+            ],
         ]);
     }
 }

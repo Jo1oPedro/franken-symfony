@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Exception;
 
 use App\shared\Exception\HasHttpRepresentation;
@@ -9,7 +11,7 @@ class EmailNotVerifiedException extends \DomainException implements HasHttpRepre
 {
     public function __construct()
     {
-        parent::__construct("Email not verified.");
+        parent::__construct('Email not verified.');
     }
 
     public function getStatusCode(): int
@@ -19,6 +21,6 @@ class EmailNotVerifiedException extends \DomainException implements HasHttpRepre
 
     public function getErrorCode(): string
     {
-        return "EMAIL_NOT_VERIFIED";
+        return 'EMAIL_NOT_VERIFIED';
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\shared\Infrastructure;
 
 use App\shared\Port\TransactionManagerInterface;
@@ -11,11 +13,14 @@ final readonly class DoctrineTransactionManager implements TransactionManagerInt
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-    ) {}
+    ) {
+    }
 
     /**
      * @template T
+     *
      * @param callable(): T $callback
+     *
      * @return T
      */
     public function transactional(callable $callback): mixed

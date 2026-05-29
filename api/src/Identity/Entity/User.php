@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Entity;
 
 use App\Identity\Repository\UserRepository;
@@ -18,7 +20,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Column(type: 'string', length: 36)]
     private string $id;
 
-    /** @var non-empty-string $email  */
+    /** @var non-empty-string $email */
     #[Column(type: 'string', length: 180, unique: true)]
     private string $email;
 
@@ -38,12 +40,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct(
         string $id,
         string $email,
-        string $password
+        string $password,
     ) {
         $this->id = $id;
         $this->email = $email;
         $this->password = $password;
-        $this->roles = ["ROLE_USER"];
+        $this->roles = ['ROLE_USER'];
         $this->isVerified = false;
     }
 

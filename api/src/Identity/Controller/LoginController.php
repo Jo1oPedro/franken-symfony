@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Identity\Controller;
 
 use App\Identity\DTO\LoginRequestDTO;
@@ -17,28 +19,29 @@ final class LoginController extends AbstractController
     public function __construct(
         private LoginUser $loginUserCase,
         private AttachAuthCookiesToRequest $attachAuthCookiesToRequest,
-    ) {}
+    ) {
+    }
 
     #[Route('/api/login', name: 'login')]
-    #[RateLimit(limiter: "login", by: "ip")]
+    #[RateLimit(limiter: 'login', by: 'ip')]
     public function index(
-        #[MapRequestPayload] LoginRequestDTO $loginRequestDTO
-    ): JsonResponse
-    {
+        #[MapRequestPayload] LoginRequestDTO $loginRequestDTO,
+    ): JsonResponse {
         $authResponseDTO = ($this->loginUserCase)($loginRequestDTO);
 
         $response = $this->json(
             [
-                "user" => [
-                    "id" => $authResponseDTO->id,
-                    "email" => $authResponseDTO->email,
-                    "verified" => $authResponseDTO->verified
-                ]
+                'user' => [
+                    'id' => $authResponseDTO->id,
+                    'email' => $authResponseDTO->email,
+                    'verified' => $authResponseDTO->verified,
+                ],
             ],
             Response::HTTP_OK,
         );
 
         ($this->attachAuthCookiesToRequest)($response, $authResponseDTO);
+
         return $response;
     }
 }
