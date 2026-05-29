@@ -18,18 +18,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Column(type: 'string', length: 36)]
     private string $id;
 
+    /** @var non-empty-string $email  */
     #[Column(type: 'string', length: 180, unique: true)]
     private string $email;
 
     #[Column(type: 'string')]
     private string $password;
 
+    /** @var string[] $roles */
     #[Column(type: 'json')]
     private array $roles = [];
 
     #[Column(type: 'boolean', options: ['default' => false])]
     private bool $isVerified = false;
 
+    /**
+     * @param non-empty-string $email
+     */
     public function __construct(
         string $id,
         string $email,
@@ -47,6 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
+    /** @return non-empty-string */
     public function getEmail(): string
     {
         return $this->email;
@@ -57,6 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
+    /** @return string[] */
     public function getRoles(): array
     {
         return $this->roles;
