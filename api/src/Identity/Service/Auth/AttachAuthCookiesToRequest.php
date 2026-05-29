@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
 final readonly class AttachAuthCookiesToRequest
 {
@@ -16,17 +17,24 @@ final readonly class AttachAuthCookiesToRequest
         private JWTTokenManagerInterface $jwtTokenManager,
         private EntityManagerInterface $entityManager,
         private UserRepositoryInterface $userRepository,
-        private string $environment
+        //private string $environment
     ) {}
 
     public function __invoke(Response $response, AuthResponseDTO $user): void
     {
-        $user = $this->userRepository->findByEmail($user->email);
-        $accessJwt = $this->jwtTokenManager->create($user);
+        $userRegister = $this->userRepository->findByEmail($user->email);
+
+        if(!$userRegister) {
+            $exception = new UserNotFoundException();
+            $exception->setUserIdentifier($user->email);
+            throw $exception;
+        }
+
+        $accessJwt = $this->jwtTokenManager->create($userRegister);
 
         $refreshPlain = bin2hex(random_bytes(48));
         $refreshExpires = new \DateTimeImmutable("+7 days");
-        $refresh = new RefreshToken($user, hash('sha256', $refreshPlain), $refreshExpires);
+        $refresh = new RefreshToken($userRegister, hash('sha256', $refreshPlain), $refreshExpires);
         $this->entityManager->persist($refresh);
         $this->entityManager->flush();
 
