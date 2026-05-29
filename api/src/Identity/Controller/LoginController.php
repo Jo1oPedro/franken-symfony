@@ -5,6 +5,7 @@ namespace App\Identity\Controller;
 use App\Identity\DTO\LoginRequestDTO;
 use App\Identity\Service\Auth\AttachAuthCookiesToRequest;
 use App\Identity\Service\Auth\LoginUser;
+use App\shared\Attribute\RateLimit;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,7 @@ final class LoginController extends AbstractController
     ) {}
 
     #[Route('/api/login', name: 'login')]
+    #[RateLimit(limiter: "login", by: "ip")]
     public function index(
         #[MapRequestPayload] LoginRequestDTO $loginRequestDTO
     ): JsonResponse

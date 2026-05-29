@@ -4,6 +4,7 @@ namespace App\Identity\Controller;
 
 use App\Identity\DTO\ResendVerificationEmailRequestDTO;
 use App\Identity\Service\Auth\ResendVerificationEmail;
+use App\shared\Attribute\RateLimit;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,7 @@ class ResendVerificationEmailController extends AbstractController
     ) {}
 
     #[Route("/api/auth/resend-verification-email", methods: ["POST"])]
+    #[RateLimit(limiter: "resend-verification-email", by: "ip")]
     public function __invoke(
         #[MapRequestPayload] ResendVerificationEmailRequestDTO $resendVerificationEmailRequestDTO
     ): JsonResponse

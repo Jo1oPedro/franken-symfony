@@ -5,6 +5,7 @@ namespace App\Identity\Controller;
 use App\Identity\DTO\RegisterRequestDTO;
 use App\Identity\Service\Auth\AttachAuthCookiesToRequest;
 use App\Identity\Service\Auth\RegisterUser;
+use App\shared\Attribute\RateLimit;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,7 @@ final class RegisterController extends AbstractController
     ) {}
 
     #[Route("/api/register", methods: ["POST"])]
+    #[RateLimit(limiter: "register", by: "ip")]
     public function __invoke(
         #[MapRequestPayload] RegisterRequestDTO $request
     ): JsonResponse {
