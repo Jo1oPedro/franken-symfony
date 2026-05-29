@@ -20,13 +20,13 @@ class RateLimitListener
     public function __construct(
         RateLimiterFactory $loginLimiter,
         RateLimiterFactory $registerLimiter,
-        RateLimiterFactory $resendVerificationLimiter,
+        RateLimiterFactory $resendVerificationEmailLimiter,
         private Security $security,
     ) {
         $this->limiters = [
-            'login'               => $loginLimiter,
-            'register'            => $registerLimiter,
-            'resend_verification' => $resendVerificationLimiter,
+            'login' => $loginLimiter,
+            'register' => $registerLimiter,
+            'resend_verification_email' => $resendVerificationEmailLimiter,
         ];
     }
 
