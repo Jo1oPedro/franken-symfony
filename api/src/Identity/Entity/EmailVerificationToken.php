@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Identity\Entity;
 
-use App\Identity\Repository\EmailVerificationTokenRepository;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
@@ -13,7 +12,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 use Symfony\Component\Uid\Uuid;
 
-#[Entity(repositoryClass: EmailVerificationTokenRepository::class)]
+#[Entity]
 #[Table(name: 'email_verification_tokens')]
 class EmailVerificationToken
 {
