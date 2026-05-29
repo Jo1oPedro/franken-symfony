@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -e
+
+echo "Running code quality checks (composer check)..."
+
+cd "$(git rev-parse --show-toplevel)/api"
+
+if ! composer check; then
+    echo ""
+    echo "Commit blocked: code quality checks failed."
+    echo "Fix the issues above (or run 'composer cs-fix' for auto-fixable style issues) and try again."
+    exit 1
+fi
+
+echo "All checks passed."
+exit 0
