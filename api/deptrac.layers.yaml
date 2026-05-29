@@ -22,6 +22,15 @@ deptrac:
           collectors:
               - type: directory
                 value: src/.*/Entity/.*
+        -   name: Exception
+            collectors:
+              - type: directory
+                value: src/.*/Exception/.*
+        -   name: Validator
+            collectors:
+              - type: directory
+                value: src/.*/Validator/.*
+
     ruleset:
         Controller:
             - Service
@@ -30,11 +39,16 @@ deptrac:
             - Repository
             - DTO
             - Entity
+            - Exception
         Repository:
             - Entity
         DTO:
             - Entity
+            - Validator
+        Validator:
+            - Repository
         Entity: ~
+        Exception: ~
     skip_violations:
         App\Identity\Controller\MeController:
             - App\Identity\Entity\User
