@@ -22,19 +22,19 @@ final readonly class AttachAuthCookiesToRequest
 
     public function __invoke(Response $response, AuthResponseDTO $user): void
     {
-        $userRegister = $this->userRepository->findByEmail($user->email);
+        $userRecord = $this->userRepository->findByEmail($user->email);
 
-        if(!$userRegister) {
+        if(!$userRecord) {
             $exception = new UserNotFoundException();
             $exception->setUserIdentifier($user->email);
             throw $exception;
         }
 
-        $accessJwt = $this->jwtTokenManager->create($userRegister);
+        $accessJwt = $this->jwtTokenManager->create($userRecord);
 
         $refreshPlain = bin2hex(random_bytes(48));
         $refreshExpires = new \DateTimeImmutable("+7 days");
-        $refresh = new RefreshToken($userRegister, hash('sha256', $refreshPlain), $refreshExpires);
+        $refresh = new RefreshToken($userRecord, hash('sha256', $refreshPlain), $refreshExpires);
         $this->entityManager->persist($refresh);
         $this->entityManager->flush();
 
