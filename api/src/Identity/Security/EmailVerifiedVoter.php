@@ -7,6 +7,9 @@ use App\Identity\Exception\EmailNotVerifiedException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
+/**
+ * @extends Voter<self::ATTRIBUTE, mixed>
+ */
 final class EmailVerifiedVoter extends Voter
 {
     public const string ATTRIBUTE = "EMAIL_VERIFIED";
