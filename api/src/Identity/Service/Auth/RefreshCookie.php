@@ -2,6 +2,7 @@
 
 namespace App\Identity\Service\Auth;
 
+use App\Identity\DTO\AuthResponseDTO;
 use App\Identity\Entity\RefreshToken;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,7 +34,10 @@ final readonly class RefreshCookie
         $this->entityManager->flush();
 
         $response = new JsonResponse(status: 204);
-        ($this->attachAuthCookiesToRequest)($response, $refresh->getUser());
+        ($this->attachAuthCookiesToRequest) (
+            $response,
+            AuthResponseDTO::fromEntity($refresh->getUser())
+        );
 
         return $response;
     }
