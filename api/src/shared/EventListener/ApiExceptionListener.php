@@ -28,7 +28,7 @@ class ApiExceptionListener
 
         if($exception instanceof HasHttpRepresentation) {
             $status = $exception->getStatusCode();
-            $headers = $exception->getHeaders();
+            $headers = [];
             $code = $this->codeFromStatus($status);
             $message = $exception->getMessage() ?: Response::$statusTexts[$status] ?? "Error";
         } elseif ($exception instanceof HttpExceptionInterface) {
