@@ -7,7 +7,7 @@ use App\Identity\Entity\User;
 
 interface EmailVerificationTokenRepositoryInterface
 {
-    public function save(EmailVerificationToken $emailVerificationToken);
+    public function save(EmailVerificationToken $emailVerificationToken): void;
 
     public function findByToken(string $token): ?EmailVerificationToken;
 
