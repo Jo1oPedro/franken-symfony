@@ -7,6 +7,9 @@ use App\Identity\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<EmailVerificationToken>
+ */
 class EmailVerificationTokenRepository extends ServiceEntityRepository implements EmailVerificationTokenRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
