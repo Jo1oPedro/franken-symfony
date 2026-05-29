@@ -7,10 +7,10 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class UniqueEmailValidator extends ConstraintValidator
+final class UniqueEmailValidator extends ConstraintValidator
 {
     public function __construct(
-        private UserRepositoryInterface $userRepository,
+        private readonly UserRepositoryInterface $userRepository,
     ) {}
 
     public function validate(mixed $value, Constraint $constraint): void
@@ -21,6 +21,10 @@ class UniqueEmailValidator extends ConstraintValidator
 
         if(empty($value)) {
             return;
+        }
+
+        if(!is_string($value)) {
+            throw new UnexpectedTypeException($value, 'string');
         }
 
         if($this->userRepository->findByEmail($value) !== null) {
