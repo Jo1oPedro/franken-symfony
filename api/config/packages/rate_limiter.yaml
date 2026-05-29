@@ -10,7 +10,7 @@ framework:
             limit: 3
             interval: '1 hour'
 
-        resend_verification:
+        resend_verification_email:
             policy: 'fixed_window'
             limit: 3
             interval: '15 minutes'

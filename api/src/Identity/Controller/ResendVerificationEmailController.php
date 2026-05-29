@@ -18,7 +18,7 @@ class ResendVerificationEmailController extends AbstractController
     ) {}
 
     #[Route("/api/auth/resend-verification-email", methods: ["POST"])]
-    #[RateLimit(limiter: "resend-verification-email", by: "ip")]
+    #[RateLimit(limiter: "resend_verification_email", by: "ip")]
     public function __invoke(
         #[MapRequestPayload] ResendVerificationEmailRequestDTO $resendVerificationEmailRequestDTO
     ): JsonResponse
