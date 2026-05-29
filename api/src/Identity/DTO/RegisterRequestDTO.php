@@ -9,6 +9,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final readonly class RegisterRequestDTO
 {
+    /**
+     * @param non-empty-string $email
+     * @param non-empty-string $password
+     */
     public function __construct(
         #[NotBlank(message: "Email is required")]
         #[Email(message: "Email is required")]
